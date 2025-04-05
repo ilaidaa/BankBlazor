@@ -52,7 +52,7 @@ namespace BankBlazor.API.Controllers
             {
                 AccountId = accountId,
                 Date = DateOnly.FromDateTime(DateTime.Now),
-                Type = "Deposit",
+                Type = "Credit",
                 Operation = "Insättning",
                 Amount = amount,
                 Balance = account.Balance,

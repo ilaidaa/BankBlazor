@@ -14,7 +14,15 @@ namespace BankBlazor.API
 
            
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles; //Denna rad la jag till för att min AccountController skulle funka annars gav den error i Swagger annars blev det evig cirkel när jag försökte få transaktioner från ett konto
+                                                                                                                                   // "Om du stöter på ett objekt som pekar tillbaka (ex: Account har Transaction som har Account igen)... då ska du bara sluta följa det där — så att det inte blir en evig loop."
+                });
+
+
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
