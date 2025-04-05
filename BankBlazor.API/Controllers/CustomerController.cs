@@ -4,7 +4,7 @@ using BankBlazor.API.Models;
 
 namespace BankBlazor.API.Controllers
 {
-    // Controller som sköter Kunder
+    // Controller som sköter Kunder, dvs visar alla kunder men kan också visa en kund om man skriver in dess id
 
     [ApiController]
     [Route("api/[controller]")]

@@ -4,7 +4,7 @@ using BankBlazor.API.Models;
 
 namespace BankBlazor.API.Controllers
 {
-    // Controller som ska hantera konto och pengar
+    // Controller som ska visa  konto och transaktioner som tillhör konto och pengar
 
     [Route("api/[controller]")]             //Vart jag kan hitta den
     [ApiController]                         // Säger : "Detta är en API Controller

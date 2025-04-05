@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore; // dessa ska man tydligen ha med
 using BankBlazor.API.Models; // Den också
 
+
+
+// Sköter insättning, uppdaterar kontot med ny balance och sparar i databasen
+
 namespace BankBlazor.API.Controllers
 {
     [Route("api/[controller]")] // Själva adressen vart jag ska hitta dvs endpoint
@@ -21,7 +25,7 @@ namespace BankBlazor.API.Controllers
 
 
         // POST: api/transaction/deposit
-        [HttpPost("deposit")] 
+        [HttpPost("credit")] 
         // HttpPost: Den här metoden ska anropas med en HTTP POST-förfrågan (istället för t.ex. GET, PUT eller DELETE).
         // "deposit": Det är den sista delen av URL:en som används för att nå just den här metoden.
         public async Task<ActionResult> Deposit(int accountId, decimal amount) // Task lovar att resturnera och ActionResult är en klass inbyggd i C#
