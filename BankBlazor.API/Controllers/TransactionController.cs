@@ -24,6 +24,9 @@ namespace BankBlazor.API.Controllers
         }
 
 
+
+
+        // INSÄTTNING
         // POST: api/transaction/deposit
         [HttpPost("credit")] 
         // HttpPost: Den här metoden ska anropas med en HTTP POST-förfrågan (istället för t.ex. GET, PUT eller DELETE).
@@ -65,6 +68,59 @@ namespace BankBlazor.API.Controllers
             await _context.SaveChangesAsync(); // Sparar alla men i Assynk verison. Precis som vanliga men lägg bara till await och Async
 
             return Ok("Insättning genomförd."); //Meddelande till användaren
+        }
+
+
+
+
+
+
+
+
+
+        // UTTAG
+        // POST: api/transaction/debit
+        [HttpPost("debit")]
+        public async Task<ActionResult> Withdraw(int accountId, decimal amount)
+        {
+            // Skapa account variabel från Accounts tabellen med hjälp av _Context åsen ge första matchande värdet av AccountID som matas in
+            var account = await _context.Accounts.FirstOrDefaultAsync(a => a.AccountId == accountId);
+
+            // Om kontot inte finns dv.s null
+            if (account == null)
+            {
+                return NotFound("Kontot hittades inte.");
+            }
+              
+            // Om det inte finns tillräckligt med pengar
+            if (account.Balance < amount)
+            {
+
+                return BadRequest("Otillräckligt saldo.");
+            }
+
+            // Uppdatera saldo
+            account.Balance -= amount;
+
+            // Skapa en ny transaction objekt 
+            var transaction = new Transaction
+            {
+                AccountId = accountId,
+                Date = DateOnly.FromDateTime(DateTime.Now),
+                Type = "Debit", 
+                Operation = "Uttag",
+                Amount = amount,
+                Balance = account.Balance,
+                Symbol = "",
+                Bank = "BankBlazor",
+            };
+
+            // Lägg till den nya transaktionen och spara i databasen
+            _context.Transactions.Add(transaction);
+            await _context.SaveChangesAsync();
+
+            // Meddelande till användare
+            return Ok("Uttag genomförd.");
         }
     }
 }
