@@ -35,6 +35,12 @@ namespace BankBlazor.API.Controllers
         {
             // Kolla i Databasen första bästa som matchar
             var customer = await _context.Customers
+                .Include(c => c.Dispositions) // DENNA RAD LAS TILL EFTER, för att utan dessa så får man bara tillbaka kunden, inte konton relaterade till kunden
+        .ThenInclude(d => d.Account) // DENNA RAD LAS TILL EFTER
+                                     // Kund -> disposition -> konto. Därför måste vi ha med Dispostion för det är mellanhandel
+                                     // Säger "Jag vill ha med de Dispositions som hör till den här kunden"
+                                     // ThenInclude säger "För varje sån länk (disposition) som vi har hämtat, hämta även det konto som den pekar på"
+
                 .FirstOrDefaultAsync(c => c.CustomerId == id);
             //    await: Väntar på att databasen ska svara (utan att låsa systemet under tiden)
             //   _context.Accounts: Går till tabellen / entiteten Accounts i databasen.
