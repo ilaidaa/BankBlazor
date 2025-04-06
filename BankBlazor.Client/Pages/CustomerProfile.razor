@@ -1,5 +1,73 @@
-﻿<h3>CustomerProfile</h3>
+﻿@page "/customer-profile/{id:int}"
+@inject HttpClient Http 
+<h1>Kundprofil</h1> <!--Rubrik -->
 
-@code {
+<!-- om kunden inte laddats ner kör if om den laddats ner kör else -->
+@if (customer == null)
+{
+    <p>Laddar kundinformation...</p>
+}
+else
+{
+    <!-- snabelA framför allt som har med C# att göra eller ska referera till C# kod. Tar fram kundens uppgifter här-->
+    <h3>@customer.Givenname @customer.Surname</h3>
+    <p>Adress: @customer.Streetaddress, @customer.City</p>
 
+    <h4>Konton:</h4>
+    <ul>
+        <!-- Tar fram kundens kontoId och saldo genom en loop här ul är inte organiserad-->
+        @foreach (var disp in customer.Dispositions)
+        {
+            <li>
+                Konto-ID: @disp.Account.AccountId –
+                Saldo: @disp.Account.Balance kr
+            </li>
+        }
+    </ul>
+}
+
+@code {// varje gång du skriver @code ska C# kod komma
+    
+
+    private Customer? customer; // Skapa en customer som bara kan användas i denna klass
+                               // ? menar att den kan va null medan den laddar och vi ska hantera, vilket vi egentligen längst upp gjorde
+    [Parameter]
+    public int id { get; set; } // Denna rad kom till senare så vi kan SÖKA på Id av kunden vi vill ha info om annars kan man tabort denna om kund1 automatisk ska komma
+    
+
+    protected override async Task OnInitializedAsync()
+    {
+        customer = await Http.GetFromJsonAsync<Customer>($"https://localhost:7299/api/customer/{id}");
+        // getFromJSon: "Skicka ett GET-anrop till API:et – och tolka svaret som ett Customer-objekt."
+        // du säger: "Jag förväntar mig att få tillbaka en kund i form av JSON (t.ex. från databasen)."
+        // det som kommer efter $ är adressen till mitt API endpoint typ "Jag förväntar mig att få tillbaka en kund i form av JSON (t.ex. från databasen)."
+
+    }
+
+    // Vad är allt som kommer nere?
+    // När du anropar API:t så skickar servern tillbaka JSON-data.
+    //  Men C# fattar inte JSON direkt – du måste säga hur datan ser ut genom att skapa modeller, alltså klasser.
+
+    public class Customer
+    {
+        public int CustomerId { get; set; }
+        public string Givenname { get; set; }
+        public string Surname { get; set; }
+        public string Streetaddress { get; set; }
+        public string City { get; set; }
+        public List<Disposition> Dispositions { get; set; }
+    }
+
+    // Disposition är kopplingar till konton så de mellanhandel mellan kund och deras konton
+    public class Disposition
+    {
+        public int DispositionId { get; set; }
+        public Account Account { get; set; }
+    }
+
+    public class Account
+    {
+        public int AccountId { get; set; }
+        public decimal Balance { get; set; }
+    }
 }
