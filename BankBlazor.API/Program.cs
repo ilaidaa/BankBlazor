@@ -26,6 +26,27 @@ namespace BankBlazor.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+
+
+
+            // Behöver kanske tabort testar
+            builder.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(policy =>
+                {
+                    policy.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
+                });
+            });
+
+
+
+
+
+
+
+
             var app = builder.Build();
 
            
@@ -36,6 +57,9 @@ namespace BankBlazor.API
             }
 
             app.UseHttpsRedirection();
+
+            // TESTAR kanska ska tabort raden under
+            app.UseCors();
 
             app.UseAuthorization();
 
