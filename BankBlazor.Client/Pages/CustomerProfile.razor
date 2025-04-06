@@ -1,4 +1,6 @@
-﻿@page "/customer-profile"
+﻿
+
+@page "/customer-profile"
 @inject HttpClient Http 
 <h1>Sök Kundprofil</h1> <!--Rubrik -->
 
@@ -22,7 +24,7 @@ else if (customer != null)
         @foreach (var disp in customer.Dispositions)
         {
             <li>
-                Konto-ID: @disp.Account.AccountId – Saldo: @disp.Account.Balance kr
+                Konto-ID: @disp.AccountId – Saldo: @disp.Account.Balance kr
             </li>
         }
     </ul>
@@ -69,19 +71,21 @@ else if (searched)
 
     public class Customer
     {
+        
         public int CustomerId { get; set; }
         public string Givenname { get; set; }
         public string Surname { get; set; }
         public string Streetaddress { get; set; }
         public string City { get; set; }
-        public List<Disposition> Dispositions { get; set; }
+        public List<Disposition> Dispositions { get; set; } = new();
     }
 
     // Disposition är kopplingar till konton så de mellanhandel mellan kund och deras konton
     public class Disposition
     {
         public int DispositionId { get; set; }
-        public Account Account { get; set; }
+        public int AccountId { get; set; }
+        public Account Account { get; set; } = new();
     }
 
     public class Account
