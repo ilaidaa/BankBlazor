@@ -1,5 +1,66 @@
-﻿<h3>Transactions</h3>
+﻿@page "/transactions"
+@inject HttpClient Http
+
+<h1>Transaktioner</h1>
+
+<!-- Sektion för Insättning -->
+<h3>Insättning</h3>
+<input @bind="depositAccountId" placeholder="Konto-ID" type="number" />
+<input @bind="depositAmount" placeholder="Belopp" type="number" />
+<button @onclick="MakeDeposit">Sätt in</button>
+
+<!-- Sektion för Uttag -->
+<h3>Uttag</h3>
+<input @bind="withdrawAccountId" placeholder="Konto-ID" type="number" />
+<input @bind="withdrawAmount" placeholder="Belopp" type="number" />
+<button @onclick="MakeWithdrawal">Ta ut</button>
+
+<!-- Sektion för Överföring -->
+<h3>Överföring</h3>
+<input @bind="fromAccountId" placeholder="Från konto-ID" type="number" />
+<input @bind="toAccountId" placeholder="Till konto-ID" type="number" />
+<input @bind="transferAmount" placeholder="Belopp" type="number" />
+<button @onclick="MakeTransfer">Överför</button>
+
+<p style="color: green">@resultMessage</p>
+
 
 @code {
+    // Deklarera alla variabler men ge inte värde. Du kan skriva antingen = 0 eller bara ;
+    private int depositAccountId, withdrawAccountId, fromAccountId, toAccountId = 0; 
+    private decimal depositAmount, withdrawAmount, transferAmount;
+    private string resultMessage = ""; // I C# får en string automatiskt värdet null om man inte sätter något.
+                                       // Men att skriva ut en null-sträng i Blazor(t.ex.med @resultMessage) kan ibland leda till fel – eller åtminstone inget syns.
+                                       // En tom sträng "" är säkrare, eftersom det då inte visas något men det kraschar inte heller.
 
+        public async Task MakeDeposit()
+        {
+            var response = await Http.PostAsync($"https://localhost:7299/api/Transaction/credit?accountId={depositAccountId}&amount={depositAmount}", null);
+            resultMessage = await response.Content.ReadAsStringAsync();
+        // var : skapar en variabel som heter `response`, och den kommer innehålla svaret från API:t
+        // await: Vänta på att svaret ska komma tillbaka från API:t – **utan att låsa upp sidan** under tiden
+        // HttpClient : som jag @inject-at högst upp. Den används för att prata med API:t.
+        // PostAsync : PostAsync är något inbyggd och det finns typ GetAsync DeleteAsync osv och tanken är jag bara ska meddela programmet vad jag vill göra typ get hämta data post ändra data osv
+
+        // https ://localhost:7299 : Adressen där mitt API körs just nu på min dator (localhost)
+        // /api/Transaction	: Detta pekar på min TransactionController
+        // /credit : Detta pekar på HTTP-metoden [HttpPost("credit")] inne i TransactionController
+        // ? : Startar  query parameters alltså det som behövs för att credit HTTP metoden i TransactionController ska funka och då var det en int och en decimal vi skickade
+        // & : är tecknet för att säga att någonting mer kommer, det binder alla query parameters. Används för att separera flera värden
+
+
+        }
+
+        public async Task MakeWithdrawal()
+        {
+            var response = await Http.PostAsync($"https://localhost:7299/api/Transaction/debit?accountId={withdrawAccountId}&amount={withdrawAmount}", null);
+            resultMessage = await response.Content.ReadAsStringAsync();
+        }
+
+        public async Task MakeTransfer()
+        {
+            var response = await Http.PostAsync($"https://localhost:7299/api/Transaction/Transfer?fromAccountId={fromAccountId}&toAccountId={toAccountId}&amount={transferAmount}", null);
+            resultMessage = await response.Content.ReadAsStringAsync();
+        }
+    
 }
