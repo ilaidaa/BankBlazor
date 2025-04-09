@@ -5,20 +5,27 @@
 
 <!-- Sektion för Insättning -->
 <h3>Insättning</h3>
+<label>Konto-ID</label>
 <input @bind="depositAccountId" placeholder="Konto-ID" type="number" />
+<label>Belopp</label>
 <input @bind="depositAmount" placeholder="Belopp" type="number" />
 <button @onclick="MakeDeposit">Sätt in</button>
 
 <!-- Sektion för Uttag -->
 <h3>Uttag</h3>
+<label>Konto-ID</label>
 <input @bind="withdrawAccountId" placeholder="Konto-ID" type="number" />
+<label>Belopp</label>
 <input @bind="withdrawAmount" placeholder="Belopp" type="number" />
 <button @onclick="MakeWithdrawal">Ta ut</button>
 
 <!-- Sektion för Överföring -->
 <h3>Överföring</h3>
+<label>Från konto-ID</label>
 <input @bind="fromAccountId" placeholder="Från konto-ID" type="number" />
+<label>Till konto-ID</label>
 <input @bind="toAccountId" placeholder="Till konto-ID" type="number" />
+<label>Belopp</label>
 <input @bind="transferAmount" placeholder="Belopp" type="number" />
 <button @onclick="MakeTransfer">Överför</button>
 
