@@ -13,3 +13,13 @@
     </nav>
 </header>
 
+
+<!-- Det här är det som gör att Transaction sidan funkar den är kopplad till TransactionController och Transaction.razor-->
+<!--Det är Blazors sätt att skapa en länk till en annan sida i din app.Tänk dig som en knapp du klickar på för att gå till en annan sida
+    href="/transactions" : Betyder = När du klickar på den här länken, ska du gå till sidan som har detta högst upp i filen
+    Så om du har en .razor-fil som heter Transactions.razor och där det står snabelApage "/transactions"  då kommer du dit.
+    class="nav-link" : Gör att länken får stil/utseende
+-->
+<NavLink href="/transactions" class="nav-link" Match="NavLinkMatch.All">
+    Transactions
+</NavLink>
