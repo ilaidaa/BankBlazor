@@ -25,7 +25,11 @@ else if (customer != null)
         @foreach (var disp in customer.Dispositions)
         {
             <li>
-                Konto-ID: @disp.AccountId – Saldo: @disp.Account.Balance kr
+                Konto-ID: @disp.AccountId
+                Saldo: @disp.Account.Balance kr
+            </li>
+            <li>
+                Saldo: @disp.Account.Balance kr
             </li>
         }
     </ul>
