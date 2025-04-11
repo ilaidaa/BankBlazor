@@ -4,22 +4,27 @@
 <h1>Transaktioner</h1>
 
 <!-- Sektion för Insättning -->
+<div style="margin-top: 60px;"> <!-- div är för mellanrum och margin top avgör avståndet-->
 <h3>Insättning</h3>
 <label>Konto-ID</label>
 <input @bind="depositAccountId" placeholder="Konto-ID" type="number" />
 <label>Belopp</label>
 <input @bind="depositAmount" placeholder="Belopp" type="number" />
 <button @onclick="MakeDeposit">Sätt in</button>
+</div>
 
 <!-- Sektion för Uttag -->
+<div style="margin-top: 20px;"> <!-- div är för mellanrum och margin top avgör avståndet-->
 <h3>Uttag</h3>
 <label>Konto-ID</label>
 <input @bind="withdrawAccountId" placeholder="Konto-ID" type="number" />
 <label>Belopp</label>
 <input @bind="withdrawAmount" placeholder="Belopp" type="number" />
 <button @onclick="MakeWithdrawal">Ta ut</button>
+</div>
 
 <!-- Sektion för Överföring -->
+<div style="margin-top: 20px;"> <!-- div är för mellanrum och margin top avgör avståndet-->
 <h3>Överföring</h3>
 <label>Från konto-ID</label>
 <input @bind="fromAccountId" placeholder="Från konto-ID" type="number" />
@@ -28,6 +33,7 @@
 <label>Belopp</label>
 <input @bind="transferAmount" placeholder="Belopp" type="number" />
 <button @onclick="MakeTransfer">Överför</button>
+</div>
 
 <p style="color: green">@resultMessage</p>
 
