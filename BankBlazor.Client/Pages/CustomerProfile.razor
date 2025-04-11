@@ -17,22 +17,32 @@
 // Om customer inte är null körs allt i else if blocket och konto id och saldo visas @ disp är variabeln som du gjorde i foreach loopen
 else if (customer != null)
 {
-    <h3>@customer.Givenname @customer.Surname</h3>
-    <p>Adress: @customer.Streetaddress, @customer.City</p>
-
+    <div style="margin-top: 40px;"> <!-- div är för mellanrum och margin top avgör avståndet-->
+    <h4>Kundinformation:</h4>
+    <ul>
+    <li>
+        Kund: @customer.Givenname @customer.Surname
+    </li>
+    <li>
+        Adress: @customer.Streetaddress, @customer.City
+    </li>
+    </ul>
+    </div>
+   
+     <div style="margin-top: 40px;"> <!-- div är för mellanrum och margin top avgör avståndet-->
     <h4>Konton:</h4>
     <ul>
         @foreach (var disp in customer.Dispositions)
         {
             <li>
                 Konto-ID: @disp.AccountId
-                Saldo: @disp.Account.Balance kr
             </li>
             <li>
                 Saldo: @disp.Account.Balance kr
             </li>
         }
-    </ul>
+    </ul> <!--ul är för lista-->
+    </div>
 }
 else if (searched)
 {
