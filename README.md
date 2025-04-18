@@ -13,8 +13,8 @@ Backend är kopplad till en databas genom **Entity Framework Core (Database Firs
 - Alla transaktioner uppdateras och sparas i databasen
 ### Frontend (Blazor WebAssembly)
 - Gränssnitt för att:
-  - Söka och visa en **kundprofil**
-  - Göra **insättningar**, **uttag** och **överföringar**
+  Söka och visa en **kundprofil**
+  Göra **insättningar**, **uttag** och **överföringar**
 - Navigering mellan tre sidor: **Home**, **Customer Profile** och **Transactions**
 - All data hämtas från API:et via HTTP-anrop och visas direkt i gränssnittet
 
