@@ -49,5 +49,6 @@ Server=localhost;Database=BankBlazor;Trusted_Connection=True;TrustServerCertific
 - SQL Server
 - Git & GitHub
 - Visual Studio 2022
+  
 
 
